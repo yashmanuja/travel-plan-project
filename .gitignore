@@ -9,7 +9,7 @@
 /coverage
 # dependencies
 /node_modules
-/documnetation
+/documentation
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
