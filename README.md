@@ -26,3 +26,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng test` to execute the unit tests via [Karma].
 To get the Unit test coverage, run `npm run test:coverage`. This will create the coverage folder at root, when you open the index.html inside the coverage folder in the browser it will display the total coverage and also the individual file coverage.
 
+## Creating the Documentation for the Project
+
+Run `npm run doc` to generate the documentation folder at root. Once you run th command, it starts watching and you may hit `http://127.0.0.1:8080` in the browser and understand the documentation.
+
+The documentation provides a detailed and deep technical description regarding the design of the project. 
