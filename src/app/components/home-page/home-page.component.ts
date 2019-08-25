@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, map, repeat } from 'rxjs/operators';
+import { Observable, Subscriber } from 'rxjs';
+import { debounceTime, map, repeat, repeatWhen, first } from 'rxjs/operators';
 import { NgbDate, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { AppConstant } from 'src/app/constants/app.constant';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { ApiCallService } from 'src/app/services/api.call.service';
-import { Itineraries } from 'src/app/model/price.model';
+import { Itineraries, PriceDetail } from 'src/app/model/price.model';
 @Component({
   selector: 'home-page',
   templateUrl: './home-page.component.html',
@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
   public today: { year: number, month: number, day: number } = { year: 0, month: 0, day: 0 };
   public maxDate: { year: number, month: number, day: number } = { year: 0, month: 0, day: 0 };
   public searchForm: FormGroup;
-  
+  public status: Observable<any>;
+  public flightResponse: PriceDetail;
   constructor(private _fb: FormBuilder, private _apiCall: ApiCallService) {}
   ngOnInit() {
     this.searchForm = this._fb.group({
@@ -78,14 +79,16 @@ export class HomeComponent implements OnInit {
           res => {
             const getSessionKey = res.headers.get('location').split('/')[res.headers.get('location').split('/').length - 1];
             AppConstant.SESSIONKEY = getSessionKey;
-            var sub = this._apiCall.getPollSession().pipe(repeat()).subscribe(flightResp => {
-              if (flightResp.Status === AppConstant.STATUS) {
+            let sub = this._apiCall.getPollSession().pipe(repeat(), first(flightResp => flightResp.Status === AppConstant.STATUS)).
+            subscribe(flightResp => {
+              this.flightResponse = flightResp;
+              if (this.flightResponse.Status === AppConstant.STATUS) {
                 let flightsObj: { date: Date, itineraries: any[], leastPrice: number } = { date: new Date(), itineraries: [], leastPrice: 0 };
-                    if (flightResp.Legs.length)
-                      flightsObj.date = new Date(flightResp.Legs[0].Departure);
+                    if (this.flightResponse.Legs.length)
+                      flightsObj.date = new Date(this.flightResponse.Legs[0].Departure);
                     else
                       flightsObj.date = new Date("1970-03-25");
-                    flightsObj.itineraries = flightResp.Itineraries;
+                    flightsObj.itineraries = this.flightResponse.Itineraries;
                     const priceArray: number[] = [];
                     flightsObj.itineraries.map((itenary) => {
                     itenary.PricingOptions.map((price) => {
@@ -94,13 +97,12 @@ export class HomeComponent implements OnInit {
                 });
                     flightsObj.leastPrice = this.minArrayVal(priceArray);
                     this.resultArray.push(flightsObj);
-                    sub.unsubscribe();
                 }
               }, errGet => {
-                
+                console.log(errGet);
             });
           }, errorPost => {
-
+            console.log(errorPost);
           });
         }
       this.today = this.ngbDateFormat(today);

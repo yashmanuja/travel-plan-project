@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from './http-header.interceptor';
 import { environment } from 'src/environments/environment';
 
-describe(`AuthHttpInterceptor`, () => {
+describe(`HeaderInterceptor`, () => {
   let service: ApiCallService;
   let httpMock: HttpTestingController;
 
@@ -26,15 +26,15 @@ describe(`AuthHttpInterceptor`, () => {
     httpMock = TestBed.get(HttpTestingController);
   });
 
-  it('should add an Authorization header', () => {
+  it('should add headers on the request', () => {
     service.postPollSession(environment.postService).subscribe(response => {
       expect(response).toBeTruthy();
     });
   
     const httpRequest = httpMock.expectOne(environment.postService);
   
-    expect(httpRequest.request.headers.has('x-rapidapi-host'));
-    expect(httpRequest.request.headers.has('x-rapidapi-key'));
-    expect(httpRequest.request.headers.has('Content-Type'));
+    expect(httpRequest.request.headers.has('x-rapidapi-host')).toBe(true);
+    expect(httpRequest.request.headers.has('x-rapidapi-key')).toBe(true);
+    expect(httpRequest.request.headers.has('Content-Type')).toBe(true);
   });
 });
