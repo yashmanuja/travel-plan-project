@@ -1,0 +1,49 @@
+header {
+    background-color: #0003a8;
+    padding: 20px;
+    font-size: 1.5rem;
+    color: #fff;
+}
+.wrapper {
+    min-height: 100%;
+    padding: 4rem 0 10rem 0;
+    background-color:#fffbfb;
+  }
+  
+select {
+    padding: 8px;
+}
+.form-control {
+  height: 3rem;
+}
+.btn {
+  padding: .7rem 1rem;
+}
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+    width: 2rem;
+  }
+ .price-wrapper {
+  background-color: aliceblue;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding-bottom: 0;
+  font-size: .85rem;
+ }
+  .weekend {
+    border-radius: 1rem;
+  }
+  .hidden {
+    display: none;
+  }
+  .form-control[readonly] {
+    background-color: #fff;
+    cursor: pointer;
+  }    
+.bg-primary {
+  background-color: #a12345 !important;
+  color: #fff;
+}

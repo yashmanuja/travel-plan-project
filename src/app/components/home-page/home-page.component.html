@@ -1,0 +1,87 @@
+<header class="d-flex justify-content-center">
+  Travel Plan Calendar Project
+</header>
+
+<div class="wrapper">
+<div class="container content">
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="searchForm">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="source">Source</label>
+            <input (blur)="serviceCall()" id="source" placeholder="Source" id="typeahead-format" type="text" class="form-control"
+              formControlName="source" [ngbTypeahead]="searchInTypeAhead(this.states)" [resultTemplate]="so" [inputFormatter]="formatter" />
+            <ng-template #so let-s="result" let-o="term">
+              <ngb-highlight [result]="s.country" [term]="o"></ngb-highlight>
+            </ng-template>
+            <span *ngIf="searchForm.controls['source'].touched && searchForm.controls['source'].errors">Required</span>
+            <span *ngIf="searchForm.controls['source'].value === searchForm.controls['destination'].value">Source and
+              Destination cannot be same</span>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="destination">Destination</label>
+            <input id="destination" (blur)="serviceCall()" placeholder="Destination" id="typeahead-format" type="text" class="form-control"
+              formControlName="destination" [ngbTypeahead]="searchInTypeAhead(this.statesDest)" [resultTemplate]="rt"
+              [inputFormatter]="formatter" />
+            <ng-template #rt let-r="result" let-t="term">
+              <ngb-highlight [result]="r.country" [term]="t"></ngb-highlight>
+            </ng-template>
+            <span
+              *ngIf="searchForm.controls['destination'].touched && searchForm.controls['destination'].errors">Required</span>
+            <span *ngIf="searchForm.controls['source'].value === searchForm.controls['destination'].value">Source and
+              Destination cannot be same</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="adult">Adult</label>
+            <input type="number" class="form-control" id="adult" formControlName="adultNum">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="country">Country</label>
+            <select class="w-100" id="country" formControlName="country">
+              <option>US</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="currency">Currency</label>
+            <select class="w-100" formControlName="currency" id="currency">
+              <option>USD</option>
+            </select>
+          </div>
+          <!--  <form class="form-inline"> -->
+          <div class="form-group col-md-6">
+            <div class="input-group">
+              <label for="fly">Fly on</label>
+              <input readonly id="fly" autocomplete="off" (click)="d.toggle()" class="form-control w-100" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                [dayTemplate]="customDay" [minDate]=this.today [maxDate]=this.maxDate [markDisabled]="isDisabled"
+                #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                  <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--  </form> -->
+          <ng-template #customDay let-date class="myclass" let-currentMonth="currentMonth" let-selected="selected"
+            let-disabled="disabled" let-focused="focused">
+            <span class="custom-day" [class.hidden]="date.month !== currentMonth" [class.weekend]="getPrice(date)"
+              [class.focused]="focused" [class.bg-primary]="selected" [class.text-muted]="disabled">
+              {{ date.day }}
+            </span>
+            <span *ngIf="getPrice(date)" [class.hidden]="date.month !== currentMonth"
+              [class.d-flex]="getPrice(date) && (date.month === currentMonth)"
+              class="justify-content-center price-wrapper">{{getPrice(date)}}</span>
+          </ng-template>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="submit();">Sign in</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

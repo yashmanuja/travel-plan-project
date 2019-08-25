@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+*{
+    font-family: sans-serif;  
+}
+    .input-group-append {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        .btn {
+            z-index: 9 !important;
+        }
+    }
+    input{
+        border-radius: .25rem;
+        &:disabled{
+            cursor: not-allowed 
+        }
+    }
+    .input-group>.custom-select:not(:first-child), .input-group>.form-control:not(:first-child) {
+        border-radius: .25rem !important;
+    }
+    select {
+        border:1px solid #ced4da;
+        border-radius: .25rem;
+        height: 3rem;
+        &:disabled {
+            cursor: not-allowed ;
+            background: #e9ecef;
+          }
+    }
+    .ngb-dp-month{
+        &:first-child{
+        .ngb-dp-week {
+            padding:  0 !important;
+        }
+        }
+        &:last-child{
+            .ngb-dp-week {
+                padding:  0 !important;
+            }
+            }
+    }
+    .ngb-dp-day {
+        height: 3.8rem !important;
+        background-color: #aedfff;
+        margin: .2rem;
+        padding: .2rem;
+        cursor: pointer;
+        text-align: center;
+        }
+        .ngb-dp-day.disabled, .ngb-dp-day.hidden {
+            cursor: not-allowed !important;
+            background-color: transparent;
+            .price-wrapper{
+                display: none;
+            }
+        }
+        .ngb-dp-day, .ngb-dp-week-number, .ngb-dp-weekday {
+            width: 3.5rem !important;
+        }
+        .dropdown-menu.show {
+            margin-bottom: 100px ;
+        }
