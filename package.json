@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "test:coverage": "ng test --code-coverage --watch",
+    "doc": "compodoc -p ./tsconfig.app.json -s -w --disableCoverage --unitTestCoverage ./coverage/Travel-app/coverage-summary.json",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -20,6 +21,7 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "@compodoc/compodoc": "^1.1.10",
     "@fortawesome/angular-fontawesome": "^0.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
