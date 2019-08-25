@@ -1,4 +1,4 @@
-# travel-plan-project
+# Travel Plan Project
 
 # Getting Started
 
